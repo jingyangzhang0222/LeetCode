@@ -5,8 +5,8 @@ import java.util.*;
 public class AllValidPermutaionsOfParenthesesII {
     private static final char[] leftTable = {'(', '[', '{'};
     private static final char[] rightTable = {')', ']', '}'};
-    private static final int[] leftAdded = new int[3];
-    private static final int[] rightAdded = new int[3];
+    private final int[] leftAdded = new int[3];
+    private final int[] rightAdded = new int[3];
 
     public List<String> validParentheses(int l, int m, int n) {
         int[] limit = {l, m, n};
