@@ -17,7 +17,6 @@ public class FactorCombinations {
             res[i] = toIntArray(sol.get(i).toArray(new Integer[0]));
         }
         return res;
-
     }
     private void DFS(List<List<Integer>> sol, List<Integer> subsol, int quo, int start) {
         //base case
@@ -42,5 +41,6 @@ public class FactorCombinations {
             res[i] = nums[i];
         }
         return res;
+
     }
 }
