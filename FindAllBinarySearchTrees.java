@@ -52,3 +52,4 @@ public class FindAllBinarySearchTrees {
         return trees;
     }
 }
+//Time Complexity: 是Catalan Number，不过这个不重要，只要能分析出是指数级别的就行了，既然我们算的是upper bound，不用非常严格。
