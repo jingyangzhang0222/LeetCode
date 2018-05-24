@@ -29,7 +29,7 @@ class PermutationII {
         PermutationII sol = new PermutationII();
         int[] nums = {1, 0, 2, 0};
         List<List<Integer>> test = sol.permuteUnique(nums);
-        System.out.print(test);
+        System.out.print(Integer.MAX_VALUE);
     }
     public List<List<Integer>> permuteUnique(int[] nums) {
         Arrays.sort(nums);
