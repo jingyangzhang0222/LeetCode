@@ -1,3 +1,34 @@
+/*
+* Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and put.
+
+get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
+put(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
+
+Follow up:
+Could you do both operations in O(1) time complexity?
+
+Example:
+
+LRUCache cache = new LRUCache(2);
+
+        cache.put(1, 1);
+        cache.put(2, 2);
+        cache.get(1);       // returns 1
+        cache.put(3, 3);    // evicts key 2
+        cache.get(2);       // returns -1 (not found)
+        cache.put(4, 4);    // evicts key 1
+        cache.get(1);       // returns -1 (not found)
+        cache.get(3);       // returns 3
+        cache.get(4);       // returns 4
+
+    20180527
+    146
+    hard
+    OOD
+    ?
+    ?
+
+* */
 package leetcode;
 
 import java.util.HashMap;
@@ -7,92 +38,108 @@ public class LRUCache<K, V> {
     public static void main(String[] args) {
         LRUCache<Integer, Integer> test = new LRUCache<>(2);
         System.out.println(test.get(1));
-        test.set(1, 1);
-        test.set(2, 2);
+        test.put(1, 1);
+        test.put(2, 2);
         System.out.println(test.get(2));
         System.out.println(test.get(1));
-        test.set(3, 3);
+        test.put(3, 3);
         System.out.println(test.get(1));
         System.out.println(test.get(2));
         System.out.println(test.get(3));
     }
 
-    private DoublyLinkedListNode head;
-    private DoublyLinkedListNode tail;
-    private Map<K, DoublyLinkedListNode> map;
-
+    private Node head;
+    private Node tail;
+    private Map<Integer, Node> map;
     private final int capacity;
-    private int size;
 
     public LRUCache(int capacity) {
         this.capacity = capacity;
         this.map = new HashMap<>();
     }
 
-    private void removeLRUCache() {
-        map.remove(tail);
-        //at least, size is two now
-        tail = tail.prev;
-        if (tail != null) tail.next = null;
-    }
-
-    public void set(K key, V value) {
-        if (map.containsKey(key)) {
-            DoublyLinkedListNode node = map.get(key);
-            updateOrder(node);
-        } else {
-            DoublyLinkedListNode node = new DoublyLinkedListNode(value);
-            map.put(key, node);
-            if (size < capacity) {
-                updateOrder(node);
-                size++;
-            } else {
-                updateOrder(node);
+    public void put(int key, int value) {
+        if (!map.containsKey(key)) {
+            if (map.size() == capacity) {
                 removeLRUCache();
             }
+            Node node = new Node(key, value);
+            addNode(node);
+            map.put(key, node);
+        } else {
+            Node node = map.get(key);
+            updateOrder(node);
+            node.value = value;
         }
     }
 
-    public V get(K key) {
-        if (!map.containsKey(key)) {
-            return null;
+    public int get(int key) {
+        if (map == null || !map.containsKey(key)) {
+            return -1;
+        } else {
+            Node node = map.get(key);
+            updateOrder(node);
+            return node.value;
         }
-        DoublyLinkedListNode node = map.get(key);
-        updateOrder(node);
-        return map.get(key).value;
     }
 
-    private void updateOrder(DoublyLinkedListNode node) {
-        // node is NULL OR already MRU, do nothing
-        if (node == null || node == head) {
+    private void addNode(Node node) {
+        if (head == null) {
+            head = node;
+            tail = node;
             return;
         }
 
-        if (node.prev != null) {
-            node.prev.next = node.next;
-        }
-        if (node.next != null) {
-            node.next.prev = node.prev;
-        }
-
-        if (size == 0) {
-            tail = node;
-        } else if (tail == node) {
-            tail = node.prev == null ? node : node.prev;
-        }
-
         node.next = head;
-        node.prev = null;
-        if (size != 0) head.prev = node;
+        head.prev = node;
         head = node;
     }
 
-    class DoublyLinkedListNode {
-        V value;
-        DoublyLinkedListNode prev;
-        DoublyLinkedListNode next;
+    private void updateOrder(Node node) {
+        if (node == head) {//MRU, do nothing
+            return;
+        }
 
-        public DoublyLinkedListNode(V value) {
+        if (node == tail) {//not head, but tail
+            tail = node.prev;
+            node.prev.next = null;
+            node.prev = null;
+            node.next = head;
+            head.prev = node;
+            head = node;
+            return;
+        }
+        //not head, not tail
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+        node.next = head;
+        node.prev = null;
+        head.prev = node;
+        head = node;
+    }
+
+    private void removeLRUCache() {
+        map.remove(tail.key);
+        if (head == tail) {
+            head = null;
+            tail = null;
+            return;
+        }
+
+        Node newTail = tail.prev;
+        tail.prev = null;
+        newTail.next = null;
+        tail = newTail;
+    }
+
+    class Node {
+        int key;
+        int value;
+        Node prev;
+        Node next;
+
+        public Node(int key, int value) {
+            this.key = key;
             this.value = value;
         }
     }
