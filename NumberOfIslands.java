@@ -11,7 +11,7 @@ public class NumberOfIslands {
 
     }
 
-    public int numIslandsDFS(char[][] grid) {
+    public static int numIslandsDFS(char[][] grid) {
         if (grid == null || grid.length == 0 || grid[0].length == 0) {
             return 0;
         }
@@ -31,7 +31,7 @@ public class NumberOfIslands {
         return count;
     }
 
-    private void DFS(char[][] grid, boolean[][] visited, int x, int y) {
+    private static void DFS(char[][] grid, boolean[][] visited, int x, int y) {
         //base case
         if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length || visited[x][y] || grid[x][y] == '0') {
             return;

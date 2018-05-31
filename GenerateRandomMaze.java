@@ -29,10 +29,17 @@ import java.util.Arrays;
 
 public class GenerateRandomMaze {
     public static void main(String[] args) {
+        GenerateRandomMaze test = new GenerateRandomMaze();
+        int[][] maze = test.maze(23);
+        char[][] grid = new char[maze.length][maze[0].length];
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                grid[i][j] = maze[i][j] == 1 ? '1' : '0';
+            }
+
+        }
         System.out.print("生成的迷宫长这样: ");
         System.out.println();
-        GenerateRandomMaze test = new GenerateRandomMaze();
-        int[][] maze = test.maze(5);
         for (int[] row : maze) {
             for (int num : row) {
                 System.out.print(num);
@@ -42,8 +49,12 @@ public class GenerateRandomMaze {
         }
         System.out.println();
         System.out.println();
-        System.out.print("所有0是否连通: ");
+        System.out.print("所有的0是否连通: ");
         System.out.print(DisjointWhiteObjects.whiteObjects(maze) == 1 ? "是" : "否");
+        System.out.println();
+        System.out.println();
+        System.out.print("有几块连通的1: ");
+        System.out.print(NumberOfIslands.numIslandsDFS(grid));
         System.out.println();
         System.out.println();
     }
