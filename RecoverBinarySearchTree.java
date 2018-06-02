@@ -80,7 +80,7 @@ public class RecoverBinarySearchTree {
         inOrder(root.right, prev, res);
     }
 
-    public void recoverTree(TreeNode root) {
+    public void recoverTreeMorrisAlgorithms(TreeNode root) {
         TreeNode pre = null;
         TreeNode first = null, second = null;
         // Morris Traversal

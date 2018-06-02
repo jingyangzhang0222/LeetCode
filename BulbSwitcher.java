@@ -21,14 +21,14 @@ public class BulbSwitcher {
     public int bulbSwitch(int n) {
         // 1, q1, q2, ..., qn, x, n / qn, ..., n / q2, n / q1, n
         //                     ↑
-        //                   root
+        //                square root
         // odd if it is perfect square number -> on
         // even if it is not -> off
         // n = 60
         // 1  -> 1
-        // 4  -> 1, 2, 4
-        // 9  -> 1, 3, 9
-        // 16 -> 1, 2, 4, 8, 16
+        // 4  -> 1, |2|, 4
+        // 9  -> 1, |3|, 9
+        // 16 -> 1, 2, |4|, 8, 16
         // ....
         return (int)Math.sqrt(n);
     }
