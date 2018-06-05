@@ -31,15 +31,15 @@ public class ShortestSubstringWithKTypedCharacters {
             if (map[input.charAt(f) - 'a'] == 1) typeCount++;
 
             while (typeCount == k) {
-                if (f - s < globalMin) {
+                if (f - s + 1 < globalMin) {
                     start = s;
-                    globalMin = f - s;
+                    globalMin = f - s + 1;
                 }
                 map[input.charAt(s) - 'a']--;
                 if (map[input.charAt(s++) - 'a'] == 0) typeCount--;
             }
         }
 
-        return globalMin == Integer.MAX_VALUE ? "" : input.substring(start, start + globalMin + 1);
+        return globalMin == Integer.MAX_VALUE ? "" : input.substring(start, start + globalMin);
     }
 }
