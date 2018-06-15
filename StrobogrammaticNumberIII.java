@@ -21,11 +21,13 @@ Because the range might be a large number, the low and high numbers are represen
 package leetcode;
 
 public class StrobogrammaticNumberIII {
+    private static final char[][] pairs = {{'0', '0'}, {'1', '1'}, {'6', '9'}, {'8', '8'}, {'9', '6'}};
+
     public static void main(String[] args) {
         StrobogrammaticNumberIII test = new StrobogrammaticNumberIII();
         System.out.println(test.strobogrammaticInRange("0", "1"));
     }
-    private static final char[][] pairs = {{'0', '0'}, {'1', '1'}, {'6', '9'}, {'8', '8'}, {'9', '6'}};
+
     public int strobogrammaticInRange(String low, String high) {
         int[] count = {0};
         for (int i = low.length(); i <= high.length(); i++) {
