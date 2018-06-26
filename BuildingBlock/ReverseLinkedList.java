@@ -25,7 +25,7 @@ public class ReverseLinkedList {
             return head;
         }
 
-        ListNode newHead = reverseList(head.next);
+        ListNode newHead = reverseListRecursively(head.next);
         head.next.next = head;
         head.next = null;
         return newHead;
