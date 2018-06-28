@@ -23,7 +23,7 @@ Output: false
     O(1)
     O(1)
 * */
-package leetcode;
+package leetcode.Bit;
 
 public class PowerOfTwo {
     public boolean isPowerOfTwo(int n) {
