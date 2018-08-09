@@ -47,7 +47,10 @@ public class MergeTwoBinaryTrees {
 
         newRoot.left = mergeTrees(t1Left, t2Left);
         newRoot.right = mergeTrees(t1Right, t2Right);
-
         return newRoot;
+
+
     }
+
+
 }

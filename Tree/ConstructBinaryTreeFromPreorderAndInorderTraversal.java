@@ -35,8 +35,9 @@ public class ConstructBinaryTreeFromPreorderAndInorderTraversal {
         }
         return reconstruct(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, map);
     }
+
     private TreeNode reconstruct(int[] preorder, int preLeft, int preRight,
-                                 int[] inorder,  int inLeft,  int inRight,
+                                 int[] inorder, int inLeft, int inRight,
                                  Map<Integer, Integer> map) {
         // base case
         if (inLeft >= inRight) {
@@ -49,12 +50,12 @@ public class ConstructBinaryTreeFromPreorderAndInorderTraversal {
         int leftSize = index - inLeft;
 
         root.left = reconstruct(preorder, preLeft + 1, preLeft + leftSize,
-                                inorder,  inLeft, index - 1,
-                                map);
+                inorder, inLeft, index - 1,
+                map);
 
         root.right = reconstruct(preorder, preLeft + leftSize + 1, preRight,
-                                 inorder, index + 1, inRight,
-                                 map);
+                inorder, index + 1, inRight,
+                map);
 
         return root;
     }
