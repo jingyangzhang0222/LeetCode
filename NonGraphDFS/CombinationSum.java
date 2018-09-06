@@ -37,47 +37,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CombinationSum {
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+    public List<List<Integer>> combinationSum(int[] nums, int target) {
         List<List<Integer>> sol = new ArrayList<>();
-        dfsHelper1(sol, new ArrayList<Integer>(), candidates, 0, target);
+        dfsHelper(sol, new ArrayList<Integer>(), nums, target, 0);
         return sol;
     }
 
-    private void dfsHelper1(List<List<Integer>> sol, List<Integer> subsol, int[] nums, int index, int target) {
-        // base case
-        if (index == nums.length) {
+    private void dfsHelper(List<List<Integer>> sol, List<Integer> subsol, int[] nums, int target, int start) {
+        //base case
+        if (target <= 0) {
             if (target == 0) {
                 sol.add(new ArrayList(subsol));
             }
             return;
         }
 
-        int count = 0;
-        while (count * nums[index] <= target) {
-            if (count > 0) subsol.add(nums[index]);
-            dfsHelper1(sol, subsol, nums, index + 1, target - count * nums[index]);
-            count++;
-        }
-        count--;
-        while (count > 0) {
-            subsol.remove(subsol.size() - 1);
-            count--;
-        }
-    }
-
-    private void dfsHelper2(List<List<Integer>> sol, List<Integer> subsol, int[] nums, int start, int target) {
-        // base case
-        if (target < 0) {
-            return;
-        }
-        if (target == 0) {
-            sol.add(new ArrayList(subsol));
-            return;
-        }
-
         for (int i = start; i < nums.length; i++) {
             subsol.add(nums[i]);
-            dfsHelper2(sol, subsol, nums, i, target - nums[i]);
+            dfsHelper(sol, subsol, nums, target - nums[i], i);
             subsol.remove(subsol.size() - 1);
         }
     }
