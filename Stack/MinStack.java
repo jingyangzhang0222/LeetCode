@@ -32,7 +32,7 @@ import java.util.Deque;
 public class MinStack {
     private final Deque<Integer> s1;
     private final Deque<Integer> s2;
-    /** initialize your data structure here. */
+
     public MinStack() {
         s1 = new ArrayDeque<>();
         s2 = new ArrayDeque<>();

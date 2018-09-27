@@ -43,10 +43,13 @@ public class DecodeWays {
             int prevNum = s.charAt(index - 1) - '0';
             int twoDig = prevNum * 10 + thisNum;
 
+            // 0, then the previous number has to be 1 or 2
             if (thisNum == 0) {
                 if (prevNum != 1 && prevNum != 2) {
+                    // invalid, return 0;
                     return 0;
                 }
+                // valid, ways to decode is the same of that of dp[i - 2]
                 dp[i] = dp[i - 2];
             } else if (prevNum == 0 || twoDig > 26) {
                 dp[i] = dp[i - 1];

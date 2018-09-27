@@ -19,3 +19,4 @@ public class firstOccurance {
         return nums[left] == target ? left : -1;
     }
 }
+
