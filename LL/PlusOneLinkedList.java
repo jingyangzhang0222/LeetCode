@@ -22,27 +22,27 @@ package leetcode.LL;
 
 public class PlusOneLinkedList {
     public ListNode plusOne(ListNode head) {
-        // safeNode: the last non-9 Node
-        ListNode safeNode = null;
+        ListNode newHead = new ListNode(1);
+        ListNode lastNonNine = null;
         ListNode cur = head;
-        while (cur != null) {
+        while (cur.next != null) {
             if (cur.val != 9) {
-                safeNode = cur;
+                lastNonNine = cur;
             }
             cur = cur.next;
         }
-        // safeNode == null indicates all the nodes are with value of '9'
-        boolean flag = safeNode == null;
-        if (safeNode == null) safeNode = head;
-        while (safeNode != null) {
-            safeNode.val = (safeNode.val + 1) % 10;
-            safeNode = safeNode.next;
-        }
-        if (flag) {
-            ListNode newHead = new ListNode(1);
+
+        if (cur.val != 9) {
+            cur.val++;
+            return head;
+        } else {
             newHead.next = head;
-            return newHead;
+            lastNonNine = lastNonNine == null ? head : lastNonNine;
+            while (lastNonNine != null) {
+                lastNonNine.val = (lastNonNine.val + 1) % 10;
+                lastNonNine = lastNonNine.next;
+            }
+            return head.val == 0 ? newHead : head;
         }
-        return head;
     }
 }

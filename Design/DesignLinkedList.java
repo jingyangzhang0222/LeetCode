@@ -29,7 +29,7 @@ Please do not use the built-in LinkedList library.
     O(?)
     O(?)
 * */
-package leetcode.LL;
+package leetcode.Design;
 
 class DesignLinkedList {
     private ListNode head;
