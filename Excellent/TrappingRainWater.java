@@ -21,6 +21,31 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class TrappingRainWater {
+    public int trapTwoPointers(int[] height) {
+        if (height.length <= 2) {
+            return 0;
+        }
+        int left = 0, right = height.length - 1;
+        int leftMax = height[left++], rightMax = height[right--];
+
+        int sum = 0;
+        while (left <= right) {
+            if (leftMax <= rightMax) {
+                int heightDiff = Math.min(leftMax, rightMax) - height[left];
+                sum += Math.max(0, heightDiff);
+                leftMax = Math.max(leftMax, height[left]);
+                left++;
+            } else {
+                int heightDiff = Math.min(leftMax, rightMax) - height[right];
+                sum += Math.max(0, heightDiff);
+                rightMax = Math.max(rightMax, height[right]);
+                right--;
+            }
+        }
+
+        return sum;
+    }
+
     public int trapStack(int[] height) {
         Deque<Integer> s = new ArrayDeque<>();
         int sum = 0;

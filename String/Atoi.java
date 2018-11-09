@@ -51,7 +51,7 @@ Explanation: The number "-91283472332" is out of the range of a 32-bit signed in
 package leetcode.String;
 
 public class Atoi {
-    public int myAtoi(String str) {
+    public static int atoi(String str) {
         long res = 0;
         boolean converting = false;
         boolean positive = true;

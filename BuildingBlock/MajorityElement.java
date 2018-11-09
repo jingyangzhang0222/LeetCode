@@ -24,13 +24,13 @@ package leetcode.BuildingBlock;
 public class MajorityElement {
     public int majorityElement(int[] nums) {
         int res = nums[0];
-        int cnt = 1;
-        for (int i = 1; i < nums.length; i++) {
-            if (nums[i] == res) {
+        int cnt = 0;
+        for (int num : nums) {
+            if (num == res) {
                 cnt++;
-            } else if (--cnt == 0) {
-                res = nums[i];
+            } else if (--cnt == -1) {
                 cnt = 1;
+                res = num;
             }
         }
         return res;
