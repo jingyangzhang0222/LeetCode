@@ -48,14 +48,19 @@ public class RemoveInvalidParentheses {
                 }
             }
         }
+        // redundant left parnetheses
         int reL = left - right;
         dfs(sol, t, reL, reR, 0);
         return sol;
     }
 
     private void dfs(List<String> sol, char[] t, int reL, int reR, int start) {
-        if (reL == 0 && reR == 0) {
+        // in some cases, we cannot enter " start == t.length", so use this instead
+        if (reL + reR == 0) {
             if (valid(t)) {
+                // we should check if its valid or not
+                // for example, )(), when delete the first right p, we should consider )(
+                // which is, the last right p is deleted, left == right == 0, but is not valid any more
                 StringBuilder sb = new StringBuilder();
                 for (char c : t) {
                     if (c != ' ') {
@@ -69,6 +74,8 @@ public class RemoveInvalidParentheses {
         // goal: delete one char
         //
         for (int i = start; i < t.length; i++) {
+            // if it is not start index and has duplicates, the condition that it should be deleted has been processed
+            // if not a parentheses, it is valid regardlessly
             if ((t[i] != '(' && t[i] != ')') || (i != start && t[i] == t[i - 1])) {
                 continue;
             }
