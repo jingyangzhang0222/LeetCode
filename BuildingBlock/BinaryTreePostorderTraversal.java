@@ -21,39 +21,26 @@ public class BinaryTreePostorderTraversal {
         if (root == null) {
             return res;
         }
-        TreeNode prev = null;
+        TreeNode prevPolled = null;
         Deque<TreeNode> s = new ArrayDeque<>();
         s.offer(root);
 
         while (!s.isEmpty()) {
-            TreeNode cur = s.peek();
-            if (prev == null || cur == prev.left || cur == prev.right) {
-                //going down form parent
-                if (cur.left != null) {
-                    //go down to left
-                    s.offerFirst(cur.left);
-                }else if (cur.right != null) {
-                    //go down to right
-                    s.offerFirst(cur.right);
-                }else {
-                    res.add(cur.val);
-                    s.pollFirst();
-                }
-            }else if (prev == cur.left) {
-                //go up from left
-                if (cur.right != null) {
-                    //go down
-                    s.offerFirst(cur.right);
-                }else {
-                    res.add(cur.val);
-                    s.pollFirst();
-                }
-            }else {
-                //go up from right
+            TreeNode cur = s.peekLast();
+            TreeNode lastChild = cur.right != null ? cur.right : cur.left;
+
+            if ((cur.left == null && cur.right == null) || prevPolled == lastChild) {
+                s.pollLast();
                 res.add(cur.val);
-                s.pollFirst();
+                prevPolled = cur;
+            } else {
+                if (cur.right != null) {
+                    s.offerLast(cur.right);
+                }
+                if (cur.left != null) {
+                    s.offerLast(cur.left);
+                }
             }
-            prev = cur;
         }
 
         return res;
