@@ -40,30 +40,31 @@ public class RemoveKDigits {
         Deque<Integer> s = new ArrayDeque<>();
         int chance = k;
         for (int i = 0; i < num.length(); i++) {
-            char c = num.charAt(i);
-            int dig = c - '0';
+            int dig = num.charAt(i) - '0';
             if (chance == 0) {
                 s.offerLast(dig);
                 continue;
             }
-            while (s.size() > 0 && s.peekLast() > dig && chance > 0) {
-                chance--;
+
+            while (!s.isEmpty() && s.peekLast() > dig && chance > 0) {
                 s.pollLast();
+                chance--;
             }
 
-            boolean suicide = num.length() - i == chance;/////////////////
-            if (suicide) {
-                // have to delete myself, or cannot achieve the goal of deletion of k
-                chance--;
-            } else if (!(s.size() == 0 && dig == 0)) {
-                // avoid leading zero
+            if (!(s.isEmpty() && dig == 0)) {
                 s.offerLast(dig);
             }
         }
+
+        while (chance > 0) {
+            s.pollLast();
+            chance--;
+        }
+
         StringBuilder sb = new StringBuilder();
         while (!s.isEmpty()) {
             sb.append(s.pollFirst());
         }
-        return sb.length() == 0 ? "0" : sb.toString();///////////////////
+        return sb.length() == 0 ? "0" : sb.toString();
     }
 }
