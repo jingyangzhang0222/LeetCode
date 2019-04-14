@@ -8,51 +8,31 @@ public class FindEventualSafeStates {
         System.out.println(new FindEventualSafeStates().eventualSafeNodes(new int[][]{{1,2},{2,3},{5},{0},{5},{},{}}));
     }
     public List<Integer> eventualSafeNodes(int[][] graph) {
+        // find nodes that are not in any cycle, nor can we go to a cycle through it
+        // color:
+        // 0: not visited
+        // 1: visiting its neighbors, or can go to a cycle through it
+        // 2: visited
+        int n = graph.length;
+        int[] color = new int[n];
         List<Integer> res = new ArrayList<>();
-        boolean[][] edges = new boolean[graph.length][graph.length];
-
-        for (int i = 0; i < graph.length; i++) {
-            for (int j = 0; j < graph[i].length; j++) {
-                edges[i][graph[i][j]] = true;
-            }
-        }
-
-        boolean[] visited = new boolean[graph.length];
-        for (int i = 0; i < graph.length; i++) {
-            if (!visited[i]) {
-                visited[i] = true;
-                dfs(i, visited, edges, res);
+        for (int i = 0; i < n; i++) {
+            if (color[i] == 2 || (color[i] == 0 && dfs(i, graph, color))) {
+                res.add(i);
             }
         }
 
         return res;
     }
 
-    private boolean dfs(int i, boolean[] visited, boolean[][] edges, List<Integer> res) {
-        boolean self = true;
-        boolean allNei = true;
-
-        for (int j = 0; j < edges[i].length; j++) {
-            if (edges[i][j]) {
-                self = false;
-                if (visited[j]) {
-                    return false;
-                } else {
-                    visited[j] = true;
-                    boolean thisNeighborContainsNoLoop = dfs(j, visited, edges, res);
-                    if (!thisNeighborContainsNoLoop) {
-                        return false;
-                    }
-                }
+    private boolean dfs(int node, int[][] graph, int[] color) {
+        color[node] = 1;
+        for (int neighbor : graph[node]) {
+            if (color[neighbor] == 1 || (color[neighbor] == 0 && !dfs(neighbor, graph, color))) {
+                return false;
             }
-
         }
-
-
-        if (self || allNei) {
-            res.add(i);
-        }
-
-        return self || allNei;
+        color[node] = 2;
+        return true;
     }
 }

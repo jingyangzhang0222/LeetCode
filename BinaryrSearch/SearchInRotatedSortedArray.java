@@ -31,21 +31,15 @@ public class SearchInRotatedSortedArray {
         int left = 0, right = nums.length - 1;
         while (left <= right) {
             int mid = left + (right - left) / 2;
-            if (nums[mid] == target) {
-                return mid;
-            }
-
-            // nums[mid] != target
-            if (nums[mid] > nums[right]) {
-                // shifted minimum is to the left of the mid point
+            if (nums[mid] == target) return mid;
+            if (nums[left] <= nums[mid]) {
                 if (nums[left] <= target && target < nums[mid]) {
                     right = mid - 1;
                 } else {
                     left = mid + 1;
                 }
             } else {
-                // shifted minimum is to the left of the mid point, ot is mid it self
-                if (nums[mid] < target && target <= nums[right]) {
+                if (nums[mid + 1] <= target && target <= nums[right]) {
                     left = mid + 1;
                 } else {
                     right = mid - 1;
@@ -53,7 +47,6 @@ public class SearchInRotatedSortedArray {
             }
         }
 
-        // left > right, the range is not valid any more
         return -1;
     }
 }
